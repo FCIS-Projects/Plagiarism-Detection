@@ -1,1 +1,1 @@
-# Plagiarism-Detection-for-C-programming-language
+Plagiarism Detection for C++ programming language
