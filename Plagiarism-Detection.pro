@@ -14,9 +14,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    nfa.cpp
+    nfa.cpp \
+    digraph.cpp
 
 HEADERS  += mainwindow.h \
-    nfa.h
+    nfa.h \
+    digraph.h
 
 FORMS    += mainwindow.ui
