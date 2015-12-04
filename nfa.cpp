@@ -10,7 +10,7 @@ NFA::NFA(QString regular_expression)
 {
     this->regular_expression = regular_expression;
 
-    epsilon_transions = new DiGraph();
+    epsilon_transions = new DirectedGraph();
 
     QStack<int> *operations = new QStack<int>();
     this->number_of_states = regular_expression.length();

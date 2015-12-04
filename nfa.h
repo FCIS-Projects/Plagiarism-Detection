@@ -1,13 +1,13 @@
 #ifndef NFA_H
 #define NFA_H
 #include <QString>
-#include "digraph.h"
+#include "directedgraph.h"
 
 class NFA
 {
 private:
     QString regular_expression;
-    DiGraph *epsilon_transions;
+    DirectedGraph *epsilon_transions;
     int number_of_states;
 
 public:
