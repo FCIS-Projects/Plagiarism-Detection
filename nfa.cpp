@@ -56,3 +56,47 @@ NFA::~NFA()
 {
     delete epsilon_transions;
 }
+
+bool NFA::recognizes(QString str)
+{
+    QList<int> match_transisions = new QList<int>();
+    DirectedDFS dfs = new DirectedDFS(epsilon_transions,0);
+
+    for (int v = 0; v < G.V(); v++)
+    {
+        if (dfs.marked(v))
+            match_transisions.append(v);
+    }
+
+    for (int i = 0; i < str.length(); i++)
+    {
+        QList<int> match = new QList<int>();
+        for (int v = 0; v <= match_transisions.length(); v++)
+        {
+            if (v < number_of_states)
+            {
+                if (regular_expression[v] == str[i] || regular_expression[v] == ".")
+                {
+                    match.append(v+1);
+                }
+            }
+        }
+
+        match_transisions = new QList<int>();
+        dfs = new DirectedDFS(epsilon_transions, match);
+
+        for (int v = 0; v < G.V(); v++)
+        {
+            if (dfs.marked(v))
+                match_transisions.append(v);
+        }
+
+        for (int v = 0; v <= match_transisions.length(); v++)
+        {
+            if (v == number_of_states)
+                return true;
+            else
+                return false;
+        }
+    }
+}
