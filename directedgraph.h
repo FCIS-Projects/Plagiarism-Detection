@@ -8,12 +8,13 @@ class DirectedGraph
 {
 public:
     #define MAP QMap< int, QVector<int>* >
+    int nodes_number;
+
 private:
-    int vertecies;
     MAP* nodes_list;
 
 public:
-    DirectedGraph(int nodes_length);
+    DirectedGraph(int nodes_number);
     ~DirectedGraph();
 
     void add_edge( int head, int tail );
