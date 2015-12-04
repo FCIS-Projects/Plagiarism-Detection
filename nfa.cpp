@@ -62,7 +62,7 @@ bool NFA::recognizes(QString str)
     QList<int> match_transisions = new QList<int>();
     DirectedDFS dfs = new DirectedDFS(epsilon_transions,0);
 
-    for (int v = 0; v < G.V(); v++)
+    for (int v = 0; v < epsilon_transions->nodes_number(); v++)
     {
         if (dfs.marked(v))
             match_transisions.append(v);
@@ -85,7 +85,7 @@ bool NFA::recognizes(QString str)
         match_transisions = new QList<int>();
         dfs = new DirectedDFS(epsilon_transions, match);
 
-        for (int v = 0; v < G.V(); v++)
+        for (int v = 0; v < epsilon_transions->nodes_number(); v++)
         {
             if (dfs.marked(v))
                 match_transisions.append(v);
