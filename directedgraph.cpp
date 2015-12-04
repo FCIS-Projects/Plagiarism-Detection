@@ -4,7 +4,7 @@ int current_index = 0;
 
 DirectedGraph::DirectedGraph(int nodes_number)
 {
-    nodes_list = new QMap< int, QVector<int>* >;
+    nodes_list = new MAP;
 
     this->nodes_number = nodes_number;
 
@@ -20,7 +20,7 @@ void DirectedGraph::add_edge(int head, int tail)
     vertex->append(tail);
 }
 
-QMap< int, QVector<int>* >* DirectedGraph::get_nodes_list() const
+MAP* DirectedGraph::get_nodes_list() const
 {
     return nodes_list;
 }
