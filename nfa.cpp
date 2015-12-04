@@ -34,7 +34,7 @@ NFA::NFA(QString regular_expression)
                 loop = check_or;
         }
 
-        if( iii < this->number_of_states - 1 && regular_expression[iii + 1] == "*" )
+        if( iii < this->number_of_states - 1 && regular_expression[iii + 1] == '*' )
         {
 //            G.addEdge(lp, i+1);
 //            G.addEdge(i+1, lp);
@@ -42,7 +42,7 @@ NFA::NFA(QString regular_expression)
 
         if( regular_expression[iii] == '(' ||
             regular_expression[iii] == '*' ||
-            regular_expression[iii] == ')' )
+            regular_expression[iii] == ')' );
 //            G.addEdge(i, i+1);
     }
 }
