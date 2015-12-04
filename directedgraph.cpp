@@ -14,8 +14,20 @@ DirectedGraph::DirectedGraph(int nodes_number)
     }
 }
 
+void DirectedGraph::check_node_validity(int node)
+{
+    if( node < 0 || node > this->nodes_number )
+    {
+        qWarning("%i is invalid as a node", node);
+        exit(1);
+    }
+}
+
 void DirectedGraph::add_edge(int head, int tail)
 {
+    check_node_validity(head);
+    check_node_validity(tail);
+
     QVector<int> *vertex = nodes_list->operator [](head);
     vertex->append(tail);
 }

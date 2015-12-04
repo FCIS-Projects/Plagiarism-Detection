@@ -12,6 +12,7 @@ public:
 
 private:
     MAP* nodes_list;
+    void check_node_validity(int node);
 
 public:
     DirectedGraph(int nodes_number);
