@@ -15,10 +15,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     nfa.cpp \
-    digraph.cpp
+#    digraph.cpp \
+    directedgraph.cpp
 
 HEADERS  += mainwindow.h \
     nfa.h \
-    digraph.h
+#    digraph.h \
+    directedgraph.h
 
 FORMS    += mainwindow.ui
