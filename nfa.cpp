@@ -51,3 +51,8 @@ NFA::NFA(QString regular_expression)
         }
     }
 }
+
+NFA::~NFA()
+{
+    delete epsilon_transions;
+}
