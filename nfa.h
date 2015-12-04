@@ -1,16 +1,13 @@
 #ifndef NFA_H
 #define NFA_H
 #include <QString>
-#include <QObject>
-#include <QChar>
+#include "digraph.h"
 
 class NFA
 {
 private:
-//    QChar* match_transitions;
-//    QString regular_expressions;
-    //TODO: create DiGraph class
-    QObject *epsilon_transions;
+    QString regular_expression;
+    DiGraph *epsilon_transions;
     int number_of_states;
 
 public:
