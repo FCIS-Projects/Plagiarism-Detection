@@ -62,7 +62,7 @@ NFA::~NFA()
 
 bool NFA::recognizes(QString str)
 {
-    QList<int> *match_transisions = new QList<int>(); //create list to store the nodes do match with str
+    QVector<int> *match_transisions = new QVector<int>(); //create list to store the nodes do match with str
     DirectedDFS *dfs = new DirectedDFS(epsilon_transions, 0); //initialize object dfs
 
     //store the indeces of the marked nodes
@@ -75,21 +75,22 @@ bool NFA::recognizes(QString str)
 // Compute possible NFA states for str[i+1]
     for (int i = 0; i < str.length(); i++)
     {
-        QList<int> *match = new QList<int>(); //create list to store the match characters to the regular expression
+        QVector<int> *match = new QVector<int>(); //create list to store the match characters to the regular expression
 
         //store the match characters to the regular expression
-        for (int v = 0; v <= match_transisions->length(); v++)
+        foreach (int vertex, *match_transisions)
         {
-            if (v < number_of_states)
+            if (vertex < number_of_states)
             {
-                if (regular_expression[v] == str[i] || regular_expression[v] == '.')
+                if (regular_expression[vertex] == str[i] || regular_expression[vertex] == '.')
                 {
-                    match->append(v+1);
+                    match->append(vertex+1);
                 }
             }
         }
 
-        match_transisions = new QList<int>();
+
+        match_transisions = new QVector<int>();
         dfs = new DirectedDFS(epsilon_transions, match->last());
 
         //store the indeces of the marked nodes
@@ -101,9 +102,10 @@ bool NFA::recognizes(QString str)
     }
 
     //final check if the string matches the regular expression or not
-    for (int v = 0; v <= match_transisions->length(); v++)
+    //for (int v = 0; v < match_transisions->length(); v++)
+    foreach (int vertex, *match_transisions)
     {
-        if (v == number_of_states)
+        if (vertex == number_of_states)
             return true;
     }
     return false;
