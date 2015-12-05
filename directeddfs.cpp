@@ -3,30 +3,34 @@
 
 DirectedDFS::DirectedDFS(DirectedGraph *digraph)
 {
-    marked = new bool[digraph->nodes_number];
+    marked = new QVector<bool>(digraph->nodes_number);
     this->digraph = digraph;
 }
 
 DirectedDFS::DirectedDFS(DirectedGraph *digraph, int node)
 {
-    marked = new bool[digraph->nodes_number];
+    marked = new QVector<bool>(digraph->nodes_number);
     this->digraph = digraph;
     dfs(node);
 }
 
 void DirectedDFS::dfs(int node)
 {
-    marked[node] = true;
-    for (int i = 0; i <= digraph->nodes_number; i++)
+    marked->operator [](node) = true;
+    MAP* nodes_list = digraph->get_nodes_list();
+
+    foreach (int child, *(*nodes_list)[node])
     {
-        if(!marked[i])
-            dfs(i);
+        if(!marked->at(child))
+        {
+            dfs(child);
+        }
     }
 }
 
 bool DirectedDFS::mark(int node)  //to check if the node is reachable or not
 {
-    return marked[node];
+    return marked->at(node);
 }
 
 DirectedDFS::~DirectedDFS()
