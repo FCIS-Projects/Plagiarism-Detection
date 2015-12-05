@@ -89,9 +89,8 @@ bool NFA::recognizes(QString str)
             }
         }
 
-
         match_transisions = new QVector<int>();
-        dfs = new DirectedDFS(epsilon_transions, match->last());
+        dfs = new DirectedDFS(epsilon_transions, match);
 
         //store the indeces of the marked nodes
         for (int v = 0; v < epsilon_transions->nodes_number; v++)
