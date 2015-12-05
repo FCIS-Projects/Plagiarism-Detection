@@ -14,6 +14,16 @@ DirectedDFS::DirectedDFS(DirectedGraph *digraph, int node)
     dfs(node);
 }
 
+DirectedDFS::DirectedDFS(DirectedGraph *digraph, QVector<int> *list)
+{
+    marked = new QVector<bool>(digraph->nodes_number);
+    this->digraph = digraph;
+    foreach (int node, *list)
+    {
+        dfs(node);
+    }
+}
+
 void DirectedDFS::dfs(int node)
 {
     marked->operator [](node) = true;

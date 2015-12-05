@@ -11,6 +11,7 @@ private:
 public:
     DirectedDFS(DirectedGraph *digraph);
     DirectedDFS(DirectedGraph *digraph, int node); //initialize the array marked to store the reachable states
+    DirectedDFS(DirectedGraph *digraph, QVector<int> *node);
     ~DirectedDFS();
 
     void dfs(int node); //detect the reachble states of the digraph, store them in array marked[]
