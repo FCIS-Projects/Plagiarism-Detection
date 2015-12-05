@@ -18,30 +18,30 @@ NFA::NFA(QString regular_expression)
 
     for (int iii = 0; iii < number_of_states; ++iii)
     {
-        int loop = iii;
+        int current_index = iii;
 
         if( regular_expression[iii] == '(' || regular_expression[iii] == '|')
             operations->push(iii);
 
         else if( regular_expression[iii] == ')' )
         {
-            int _or = operations->pop();
+            int pop_operation = operations->pop();
 
             if( regular_expression[iii] == '|' )
             {
-                loop = operations->pop();
-                epsilon_transions->add_edge(loop, _or + 1);
-                epsilon_transions->add_edge(_or, iii);
+                current_index = operations->pop();
+                epsilon_transions->add_edge(current_index, pop_operation + 1);
+                epsilon_transions->add_edge(pop_operation, iii);
             }
 
             else
-                loop = _or;
+                current_index = pop_operation;
         }
 
         if( iii < this->number_of_states - 1 && regular_expression[iii + 1] == '*' )
         {
-            epsilon_transions->add_edge(loop, iii + 1);
-            epsilon_transions->add_edge(iii + 1, loop);
+            epsilon_transions->add_edge(current_index, iii + 1);
+            epsilon_transions->add_edge(iii + 1, current_index);
         }
 
         if( regular_expression[iii] == '(' ||
