@@ -29,4 +29,9 @@ bool DirectedDFS::mark(int node)  //to check if the node is reachable or not
     return marked[node];
 }
 
+DirectedDFS::~DirectedDFS()
+{
+    delete[] marked;
+}
+
 
