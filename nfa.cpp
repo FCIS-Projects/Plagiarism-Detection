@@ -25,20 +25,20 @@ NFA::NFA(QString regular_expression)
 
         else if( regular_expression[iii] == ')' )
         {
-            int pop_operation = operations->pop();
+            int pop = operations->pop();
 
-            if( regular_expression[iii] == '|' )
+            if( regular_expression[pop] == '|' )
             {
                 current_index = operations->pop();
-                epsilon_transions->add_edge(current_index, pop_operation + 1);
-                epsilon_transions->add_edge(pop_operation, iii);
+                epsilon_transions->add_edge(current_index, pop + 1);
+                epsilon_transions->add_edge(pop, iii);
             }
 
             else
-                current_index = pop_operation;
+                current_index = pop;
         }
 
-        if( iii < this->number_of_states - 1 && regular_expression[iii + 1] == '*' )
+        if( iii < number_of_states - 1 && regular_expression[iii + 1] == '*' )
         {
             epsilon_transions->add_edge(current_index, iii + 1);
             epsilon_transions->add_edge(iii + 1, current_index);
