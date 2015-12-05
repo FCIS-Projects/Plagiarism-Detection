@@ -1,4 +1,5 @@
 #include "nfa.h"
+#include "directedgraph.h"
 #include <QStack>
 
 NFA::NFA()
@@ -52,51 +53,58 @@ NFA::NFA(QString regular_expression)
     }
 }
 
+
 NFA::~NFA()
 {
     delete epsilon_transions;
 }
 
+
 bool NFA::recognizes(QString str)
 {
-    QList<int> match_transisions = new QList<int>();
-    DirectedDFS dfs = new DirectedDFS(epsilon_transions,0);
+    QList<int> *match_transisions = new QList<int>(); //create list to store the nodes do match with str
+    DirectedDFS *dfs = new DirectedDFS(epsilon_transions, 0); //initialize object dfs
 
-    for (int v = 0; v < epsilon_transions->nodes_number(); v++)
+    //store the indeces of the marked nodes
+    for (int v = 0; v < epsilon_transions->nodes_number; v++)
     {
-        if (dfs.marked(v))
-            match_transisions.append(v);
+        if (dfs->mark(v))
+            match_transisions->append(v);
     }
 
+// Compute possible NFA states for str[i+1]
     for (int i = 0; i < str.length(); i++)
     {
-        QList<int> match = new QList<int>();
-        for (int v = 0; v <= match_transisions.length(); v++)
+        QList<int> *match = new QList<int>(); //create list to store the match characters to the regular expression
+
+        //store the match characters to the regular expression
+        for (int v = 0; v <= match_transisions->length(); v++)
         {
             if (v < number_of_states)
             {
-                if (regular_expression[v] == str[i] || regular_expression[v] == ".")
+                if (regular_expression[v] == str[i] || regular_expression[v] == '.')
                 {
-                    match.append(v+1);
+                    match->append(v+1);
                 }
             }
         }
 
         match_transisions = new QList<int>();
-        dfs = new DirectedDFS(epsilon_transions, match);
+        dfs = new DirectedDFS(epsilon_transions, match->last());
 
-        for (int v = 0; v < epsilon_transions->nodes_number(); v++)
+        //store the indeces of the marked nodes
+        for (int v = 0; v < epsilon_transions->nodes_number; v++)
         {
-            if (dfs.marked(v))
-                match_transisions.append(v);
-        }
-
-        for (int v = 0; v <= match_transisions.length(); v++)
-        {
-            if (v == number_of_states)
-                return true;
-            else
-                return false;
+            if (dfs->mark(v))
+                match_transisions->append(v);
         }
     }
+
+    //final check if the string matches the regular expression or not
+    for (int v = 0; v <= match_transisions->length(); v++)
+    {
+        if (v == number_of_states)
+            return true;
+    }
+    return false;
 }
