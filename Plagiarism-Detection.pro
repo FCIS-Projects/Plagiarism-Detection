@@ -16,11 +16,13 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     nfa.cpp \
 #    digraph.cpp \
-    directedgraph.cpp
+    directedgraph.cpp \
+    directeddfs.cpp
 
 HEADERS  += mainwindow.h \
     nfa.h \
 #    digraph.h \
-    directedgraph.h
+    directedgraph.h \
+    directeddfs.h
 
 FORMS    += mainwindow.ui
