@@ -53,10 +53,20 @@ NFA::NFA(QString regular_expression)
             epsilon_transions->add_edge(iii + 1, current_index);
         }
 
+        // handling epsilon_transions of '?'
+        // we have 2 options
+        // option 1: A?B
+        // option 2: (AB)? and this one will use 'current_index = pop'
+        else if( iii < number_of_states - 1 && regular_expression[iii + 1] == '?' )
+        {
+            epsilon_transions->add_edge(current_index, iii + 1);
+        }
+
         // handling '(', '*', ')'
         if( regular_expression[iii] == '(' ||
             regular_expression[iii] == '*' ||
-            regular_expression[iii] == ')' )
+            regular_expression[iii] == ')' ||
+            regular_expression[iii] == '?' )
         {
             epsilon_transions->add_edge(iii, iii + 1);
         }
