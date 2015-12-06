@@ -9,10 +9,14 @@ NFA::NFA()
 
 NFA::NFA(QString regular_expression)
 {
+    /* Building the automaton for the regular expression */
     this->regular_expression = regular_expression;
 
+    // we add another node to the regular expression length
+    // to handle 'Accept State'
     epsilon_transions = new DirectedGraph(regular_expression.length() + 1);
 
+    // the stack of postfix
     QStack<int> *operations = new QStack<int>();
     this->number_of_states = regular_expression.length();
 
@@ -20,6 +24,7 @@ NFA::NFA(QString regular_expression)
     {
         int current_index = iii;
 
+        // this uses the concept of postfix to handl '(', ')' and '|'
         if( regular_expression[iii] == '(' || regular_expression[iii] == '|')
             operations->push(iii);
 
@@ -38,12 +43,17 @@ NFA::NFA(QString regular_expression)
                 current_index = pop;
         }
 
+        // handling epsilon_transions of '*'
+        // we have 2 options
+        // option 1: AB*
+        // option 2: (AB)* and this one will use 'current_index = pop'
         if( iii < number_of_states - 1 && regular_expression[iii + 1] == '*' )
         {
             epsilon_transions->add_edge(current_index, iii + 1);
             epsilon_transions->add_edge(iii + 1, current_index);
         }
 
+        // handling '(', '*', ')'
         if( regular_expression[iii] == '(' ||
             regular_expression[iii] == '*' ||
             regular_expression[iii] == ')' )
