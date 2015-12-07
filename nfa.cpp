@@ -41,7 +41,10 @@ NFA::NFA(QString regular_expression)
         }
 
         // this uses the concept of postfix to handl '(', ')' and '|'
-        if( regular_expression[iii] == '(' || regular_expression[iii] == '|' )
+        if( regular_expression[iii] == '(' )
+            operations->push(iii);
+
+        else if( regular_expression[iii] == '|' && range_index == -1 )
             operations->push(iii);
 
         else if( regular_expression[iii] == ')' )
