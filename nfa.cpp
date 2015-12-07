@@ -118,7 +118,7 @@ bool NFA::check_range(QString symbol, QChar _char)
 
     else if( symbol[0] == '\\' )
     {
-        switch (symbol[1])
+        switch (symbol[1].toLatin1())
         {
             case 'd':
             {
@@ -136,10 +136,10 @@ bool NFA::check_range(QString symbol, QChar _char)
 
             case 'w':
             {
-                if ( _char >= '0' && _char <= '9' ||
-                     _char >= 'A' && _char <= 'Z' ||
-                     _char >= 'a' && _char <= 'z' ||
-                     _char == '_')
+                if ( ( _char >= '0' && _char <= '9' ) ||
+                     ( _char >= 'A' && _char <= 'Z' ) ||
+                     ( _char >= 'a' && _char <= 'z' ) ||
+                       _char == '_' )
                     return true;
                 break;
             }
