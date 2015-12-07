@@ -188,7 +188,7 @@ bool NFA::recognizes(QString str)
 
                     range = '[' + range;
 
-                    if (check_range(range, regular_expression[vertex]))
+                    if (check_range(range, str[i]))
                         match->append(vertex+1);
 
                 }
