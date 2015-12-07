@@ -168,19 +168,6 @@ bool NFA::recognizes(QString str)
                 {
                     match->append(vertex+1);
                 }
-
-                if (regular_expression[vertex] == '-')
-                {
-                    QString range;
-                    range.operator +=(regular_expression[vertex-1]);
-                    range.operator +=(regular_expression[vertex]);
-                    range.operator +=(regular_expression[vertex+1]);
-
-                    if(check_range(range, str[i]))
-                    {
-                        match->append(vertex+2);
-                    }
-                }
             }
         }
 
