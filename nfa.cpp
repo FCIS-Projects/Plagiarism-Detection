@@ -181,7 +181,7 @@ bool NFA::recognizes(QString str)
                 if (regular_expression[vertex] == ']')
                 {
                     QString range ;
-                    for (int iii = vertex; regular_expression[iii] != '['; i--)
+                    for (int iii = vertex; regular_expression[iii] != '['; iii--)
                     {
                         range = regular_expression[iii] + range;
                     }
