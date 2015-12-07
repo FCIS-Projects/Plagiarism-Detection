@@ -107,7 +107,7 @@ bool NFA::recognizes(QString str)
     {
         QVector<int> *match = new QVector<int>(); //create list to store the match characters to the regular expression
 
-        //store the match characters to the regular expression
+        //store the characters match with the regular expression
         foreach (int vertex, *match_transisions)
         {
             if (vertex < number_of_states)
