@@ -159,11 +159,12 @@ bool NFA::recognizes(QString str)
 
                 if (regular_expression[vertex] == '-')
                 {
-                    QString range = regular_expression[vertex-1] +
-                            regular_expression[vertex]+
-                            regular_expression[vertex+1];
+                    QString range;
+                    range.operator +=(regular_expression[vertex-1]);
+                    range.operator +=(regular_expression[vertex]);
+                    range.operator +=(regular_expression[vertex+1]);
 
-                    if(range, str[i])
+                    if(check_range(range, str[i]))
                     {
                         match->append(vertex+2);
                     }
