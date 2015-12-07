@@ -83,6 +83,46 @@ NFA::NFA(QString regular_expression)
     }
 }
 
+bool NFA::check_range(QString symbol, QChar _char)
+{
+    if( symbol[1] == '-' )
+    {
+        if( _char >= symbol[0] && _char <= symbol[2] )
+            return true;
+    }
+
+    else if( symbol[0] == '\\' )
+    {
+        switch (symbol[1])
+        {
+            case 'd':
+            {
+                if ( _char >= '0' && _char <= '9' )
+                    return true;
+                break;
+            }
+
+            case 'D':
+            {
+                if ( !( _char >= '0' && _char <= '9' ) )
+                    return true;
+                break;
+            }
+
+            case 'w':
+            {
+                if ( _char >= '0' && _char <= '9' ||
+                     _char >= 'A' && _char <= 'Z' ||
+                     _char >= 'a' && _char <= 'z' ||
+                     _char == '_')
+                    return true;
+                break;
+            }
+        }
+    }
+
+    return false;
+}
 
 NFA::~NFA()
 {
