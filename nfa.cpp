@@ -20,9 +20,6 @@ NFA::NFA(QString regular_expression)
     QStack<int> *operations = new QStack<int>();
     this->number_of_states = regular_expression.length();
 
-    // use to check if I'm within a 'range'
-    int range_index = -1;
-
     for (int iii = 0; iii < number_of_states; ++iii)
     {
         int current_index = iii;
@@ -30,21 +27,14 @@ NFA::NFA(QString regular_expression)
         // handling 'range'
         if( regular_expression[iii] == '[' )
         {
-            range_index = iii;
-            epsilon_transions->add_edge(iii, iii + 1);
-        }
-
-        else if(regular_expression[iii] == ']')
-        {
-            range_index = -1;
-            epsilon_transions->add_edge(iii, iii + 1);
+            int kkk;
+            for (kkk = iii; regular_expression[kkk] != ']'; ++kkk);
+            iii = kkk;
+            current_index = iii;
         }
 
         // this uses the concept of postfix to handl '(', ')' and '|'
-        if( regular_expression[iii] == '(' )
-            operations->push(iii);
-
-        else if( regular_expression[iii] == '|' && range_index == -1 )
+        else if( regular_expression[iii] == '(' || regular_expression[iii] == '|' )
             operations->push(iii);
 
         else if( regular_expression[iii] == ')' )
@@ -101,12 +91,6 @@ NFA::NFA(QString regular_expression)
             regular_expression[iii] == '?' )
         {
             epsilon_transions->add_edge(iii, iii + 1);
-        }
-
-        // epsilon transtion(s) from '[' until ']'
-        if( range_index != -1 && regular_expression[iii] != '[' )
-        {
-            epsilon_transions->add_edge(range_index, iii);
         }
     }
 }
