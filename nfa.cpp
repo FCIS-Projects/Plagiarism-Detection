@@ -97,10 +97,19 @@ NFA::NFA(QString regular_expression)
 
 bool NFA::check_range(QString symbol, QChar _char)
 {
-    if( symbol[1] == '-' )
+    if( symbol[0] == '[' )
     {
-        if( _char >= symbol[0] && _char <= symbol[2] )
-            return true;
+        for (int iii = 1; iii < symbol.length() - 1; ++iii)
+        {
+            if( _char == symbol[iii] )
+                return true;
+
+            else if( symbol[iii] == '-' )
+            {
+                if( _char >= symbol[iii - 1] && _char <= symbol[iii + 1] )
+                    return true;
+            }
+        }
     }
 
     else if( symbol[0] == '\\' )
