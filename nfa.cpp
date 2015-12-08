@@ -29,6 +29,7 @@ NFA::NFA(QString regular_expression)
         {
             int kkk;
             for (kkk = iii; regular_expression[kkk] != ']'; ++kkk);
+            epsilon_transions->add_edge(iii, kkk);
             iii = kkk;
             current_index = iii;
         }
@@ -83,12 +84,13 @@ NFA::NFA(QString regular_expression)
             }
         }
 
-        // handling '(', '*', '+', ')', '?'
+        // handling '(', '*', '+', ')', '?', ']'
         if( regular_expression[iii] == '(' ||
             regular_expression[iii] == '*' ||
             regular_expression[iii] == '+' ||
             regular_expression[iii] == ')' ||
-            regular_expression[iii] == '?' )
+            regular_expression[iii] == '?' ||
+            regular_expression[iii] == ']' )
         {
             epsilon_transions->add_edge(iii, iii + 1);
         }
@@ -107,6 +109,9 @@ bool NFA::check_range(QString symbol, QChar _char)
             else if( symbol[iii] == '-' )
             {
                 if( _char >= symbol[iii - 1] && _char <= symbol[iii + 1] )
+                    return true;
+
+                else if( symbol[1] == '^' )
                     return true;
             }
         }
