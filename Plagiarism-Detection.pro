@@ -26,11 +26,7 @@ HEADERS  += mainwindow.h \
 #    digraph.h \
     directedgraph.h \
     directeddfs.h \
-<<<<<<< 1f5c4dfab761a89c253e205ab71808495f5d0aba
-    nfa_to_dfa.h
-=======
     nfa_to_dfa.h \
     directedgraph_dfa.h
->>>>>>> 66d2046762647e5d4b73d304a3d9157aeab60703
 
 FORMS    += mainwindow.ui

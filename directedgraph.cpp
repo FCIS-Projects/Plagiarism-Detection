@@ -2,6 +2,11 @@
 
 int current_index = 0;
 
+DirectedGraph::DirectedGraph()
+{
+    nodes_list = new MAP;
+}
+
 DirectedGraph::DirectedGraph(int nodes_number)
 {
     nodes_list = new MAP;
@@ -27,6 +32,9 @@ void DirectedGraph::add_edge(int head, int tail)
 {
     check_node_validity(head);
     check_node_validity(tail);
+
+    if( nodes_number == 0 && (*nodes_list)[tail] != NULL )
+        nodes_list->insert(head, new QVector<int>);
 
     QVector<int> *vertex = nodes_list->operator [](head);
     vertex->append(tail);

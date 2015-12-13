@@ -8,14 +8,17 @@ class DirectedGraph
 {
 public:
     #define MAP QMap< int, QVector<int>* >
-    int nodes_number;
+    // TODO: this should be private and use get_nodes_number() to get it
+    int nodes_number = 0;
 
 private:
     MAP* nodes_list;
+protected:
     void check_node_validity(int node);
 
 public:
     DirectedGraph(int nodes_number);
+    DirectedGraph();
     ~DirectedGraph();
 
     void add_edge( int head, int tail );
