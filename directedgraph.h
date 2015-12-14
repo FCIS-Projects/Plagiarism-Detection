@@ -30,6 +30,7 @@ namespace nfa_graph
         DirectedGraph();
         ~DirectedGraph();
 
+        int create_node();
         void add_edge( int head, int tail );
     //    void add_edge( Node* head, Node* tail );
         MAP* get_nodes_list() const;
