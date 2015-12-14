@@ -50,10 +50,10 @@ MAP* DirectedGraph::get_nodes_list() const
 
 DirectedGraph::~DirectedGraph()
 {
-    for (int iii = 0; iii < nodes_list->size(); ++iii)
-    {
-        delete (*nodes_list)[iii];
-    }
+//    for (int iii = 0; iii < nodes_list->size(); ++iii)
+//    {
+//        delete (*nodes_list)[iii];
+//    }
 
     delete nodes_list;
 }
