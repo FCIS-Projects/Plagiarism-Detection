@@ -1,5 +1,7 @@
 #include "directedgraph.h"
 
+using namespace nfa_graph;
+
 int current_index = 0;
 
 DirectedGraph::DirectedGraph()
@@ -17,6 +19,7 @@ DirectedGraph::DirectedGraph(int nodes_number)
     {
 //        nodes_list->insert(iii, new QVector<int>);
         nodes_list->append( (*new Node) );
+        (*nodes_list)[iii].index = iii;
     }
 }
 
@@ -46,6 +49,11 @@ void DirectedGraph::add_edge(int head, int tail)
 MAP* DirectedGraph::get_nodes_list() const
 {
     return nodes_list;
+}
+
+int DirectedGraph::get_nodes_number()
+{
+    return nodes_number;
 }
 
 DirectedGraph::~DirectedGraph()
