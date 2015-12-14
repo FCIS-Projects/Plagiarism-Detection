@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     directedgraph.cpp \
     directeddfs.cpp \
     nfa_to_dfa.cpp \
-    directedgraph_dfa.cpp
+    directedgraph_dfa.cpp \
+    directeddfs_dfa.cpp
 
 HEADERS  += mainwindow.h \
     nfa.h \
@@ -27,6 +28,7 @@ HEADERS  += mainwindow.h \
     directedgraph.h \
     directeddfs.h \
     nfa_to_dfa.h \
-    directedgraph_dfa.h
+    directedgraph_dfa.h \
+    directeddfs_dfa.h
 
 FORMS    += mainwindow.ui
