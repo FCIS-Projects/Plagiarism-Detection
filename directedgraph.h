@@ -2,7 +2,6 @@
 #define DIRECTEDGRAPH_H
 
 #include <QVector>
-#include <QMap>
 
 namespace nfa_graph
 {
