@@ -1,6 +1,6 @@
 #include "directedgraph.h"
 
-using namespace nfa_graph;
+using namespace digraph;
 
 int current_index = 0;
 

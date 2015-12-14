@@ -15,7 +15,7 @@ namespace digraph
     {
     public:
     //    #define MAP QMap< int, QVector<int>* >
-        #define MAP QVector<Node>
+        #define MAP QVector<digraph::Node>
         // TODO: this should be private and use get_nodes_number() to get it
 
     private:

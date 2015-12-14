@@ -5,13 +5,13 @@
 
 class DirectedDFS
 {
-private:
+protected:
     QVector <bool> *marked; //array to store the visited nodes
-    nfa_graph::DirectedGraph *digraph;
+    digraph::DirectedGraph *digraph;
 public:
-    DirectedDFS(nfa_graph::DirectedGraph *digraph);
-    DirectedDFS(nfa_graph::DirectedGraph *digraph, int node); //initialize the array marked to store the reachable states
-    DirectedDFS(nfa_graph::DirectedGraph *digraph, QVector<int> *nodes_list);
+    DirectedDFS(digraph::DirectedGraph *digraph);
+    DirectedDFS(digraph::DirectedGraph *digraph, int node); //initialize the array marked to store the reachable states
+    DirectedDFS(digraph::DirectedGraph *digraph, QVector<int> *nodes_list);
     ~DirectedDFS();
 
     void dfs(int node); //detect the reachble states of the digraph, store them in array marked[]
