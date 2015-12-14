@@ -4,10 +4,16 @@
 #include <QVector>
 #include <QMap>
 
+struct Node
+{
+    QVector<int> connections;
+};
+
 class DirectedGraph
 {
 public:
-    #define MAP QMap< int, QVector<int>* >
+//    #define MAP QMap< int, QVector<int>* >
+    #define MAP QVector<Node>
     // TODO: this should be private and use get_nodes_number() to get it
     int nodes_number = 0;
 
@@ -22,6 +28,7 @@ public:
     ~DirectedGraph();
 
     void add_edge( int head, int tail );
+//    void add_edge( Node* head, Node* tail );
     MAP* get_nodes_list() const;
 
 };
