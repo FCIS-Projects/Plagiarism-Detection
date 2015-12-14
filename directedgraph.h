@@ -3,7 +3,7 @@
 
 #include <QVector>
 
-namespace nfa_graph
+namespace digraph
 {
     struct Node
     {
