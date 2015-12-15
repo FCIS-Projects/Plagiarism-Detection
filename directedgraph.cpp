@@ -2,8 +2,6 @@
 
 using namespace digraph;
 
-int current_index = 0;
-
 DirectedGraph::DirectedGraph()
 {
     nodes_list = new MAP;
