@@ -1,10 +1,10 @@
 #include "nfa.h"
 #include "directedgraph.h"
 #include <QStack>
+#include <QDebug>
 
 NFA::NFA()
 {
-
 }
 
 NFA::NFA(QString regular_expression)
@@ -14,7 +14,7 @@ NFA::NFA(QString regular_expression)
 
     // we add another node to the regular expression length
     // to handle 'Accept State'
-    epsilon_transions = new DirectedGraph(regular_expression.length() + 1);
+    epsilon_transtions = new digraph::DirectedGraph(regular_expression.length() + 1);
 
     // the stack of postfix
     QStack<int> *operations = new QStack<int>();
@@ -29,7 +29,7 @@ NFA::NFA(QString regular_expression)
         {
             int kkk;
             for (kkk = iii; regular_expression[kkk] != ']'; ++kkk);
-            epsilon_transions->add_edge(iii, kkk);
+            epsilon_transtions->add_edge(iii, kkk);
             iii = kkk;
             current_index = iii;
         }
@@ -45,8 +45,8 @@ NFA::NFA(QString regular_expression)
             if( regular_expression[pop] == '|' )
             {
                 current_index = operations->pop();
-                epsilon_transions->add_edge(current_index, pop + 1);
-                epsilon_transions->add_edge(pop, iii);
+                epsilon_transtions->add_edge(current_index, pop + 1);
+                epsilon_transtions->add_edge(pop, iii);
             }
 
             else
@@ -61,8 +61,8 @@ NFA::NFA(QString regular_expression)
             // option 2: (AB)* and this one will use 'current_index = pop'
             if( regular_expression[iii + 1] == '*' )
             {
-                epsilon_transions->add_edge(current_index, iii + 1);
-                epsilon_transions->add_edge(iii + 1, current_index);
+                epsilon_transtions->add_edge(current_index, iii + 1);
+                epsilon_transtions->add_edge(iii + 1, current_index);
             }
 
             // handling epsilon_transions of '?'
@@ -71,7 +71,7 @@ NFA::NFA(QString regular_expression)
             // option 2: (AB)? and this one will use 'current_index = pop'
             else if( regular_expression[iii + 1] == '?' )
             {
-                epsilon_transions->add_edge(current_index, iii + 1);
+                epsilon_transtions->add_edge(current_index, iii + 1);
             }
 
             // handling epsilon_transions of '+'
@@ -80,19 +80,20 @@ NFA::NFA(QString regular_expression)
             // option 2: (AB)+ and this one will use 'current_index = pop'
             else if( regular_expression[iii + 1] == '+' )
             {
-                epsilon_transions->add_edge(iii + 1, current_index);
+                epsilon_transtions->add_edge(iii + 1, current_index);
             }
         }
 
         // handling '(', '*', '+', ')', '?', ']'
-        if( regular_expression[iii] == '(' ||
-            regular_expression[iii] == '*' ||
-            regular_expression[iii] == '+' ||
-            regular_expression[iii] == ')' ||
-            regular_expression[iii] == '?' ||
-            regular_expression[iii] == ']' )
+        switch(regular_expression[iii].toLatin1())
         {
-            epsilon_transions->add_edge(iii, iii + 1);
+            case '(':
+            case '*':
+            case '+':
+            case ')':
+            case '?':
+            case ']':
+                epsilon_transtions->add_edge(iii, iii + 1);
         }
     }
 }
@@ -112,7 +113,10 @@ bool NFA::check_range(QString symbol, QChar _char)
                     return true;
 
                 else if( symbol[1] == '^' )
+                {
+                    // TODO: this concept is wrong
                     return true;
+                }
             }
         }
     }
@@ -150,28 +154,61 @@ bool NFA::check_range(QString symbol, QChar _char)
     return false;
 }
 
-NFA::~NFA()
+QList<int> * NFA::build_reachable_states(int root)
 {
-    delete epsilon_transions;
+    // create list to store the nodes do match with str
+    QList<int> *reachable_states = new QList<int>();
+
+    if( dfs == NULL)
+        dfs = new DirectedDFS(epsilon_transtions);
+
+    else dfs->clear();
+
+    // search from 'root'
+    dfs->search(root);
+
+    //store the indeces of the marked nodes
+    for (int v = 0; v < epsilon_transtions->get_nodes_number(); v++)
+    {
+        if (dfs->is_marked(v))
+            reachable_states->append(v);
+    }
+
+    return reachable_states;
 }
 
+QList<int> * NFA::build_reachable_states(QList<int>* root)
+{
+    // create list to store the nodes do match with str
+    QList<int> *reachable_states = new QList<int>();
+
+    if( dfs == NULL)
+        dfs = new DirectedDFS(epsilon_transtions);
+
+    else dfs->clear();
+
+    // search from 'root'
+    dfs->search(root);
+
+    //store the indeces of the marked nodes
+    for (int v = 0; v < epsilon_transtions->get_nodes_number(); v++)
+    {
+        if (dfs->is_marked(v))
+            reachable_states->append(v);
+    }
+
+    return reachable_states;
+}
 
 bool NFA::recognizes(QString str)
 {
-    QVector<int> *match_transisions = new QVector<int>(); //create list to store the nodes do match with str
-    DirectedDFS *dfs = new DirectedDFS(epsilon_transions, 0); //initialize object dfs
-
-    //store the indeces of the marked nodes
-    for (int v = 0; v < epsilon_transions->nodes_number; v++)
-    {
-        if (dfs->mark(v))
-            match_transisions->append(v);
-    }
+    QList<int> *match_transisions = build_reachable_states(0);
 
 // Compute possible NFA states for str[i+1]
     for (int i = 0; i < str.length(); i++)
     {
-        QVector<int> *match = new QVector<int>(); //create list to store the match characters to the regular expression
+        //create list to store the match characters to the regular expression
+        QList<int> *match = new QList<int>();
 
         //store the characters match with the regular expression
         foreach (int vertex, *match_transisions)
@@ -200,15 +237,7 @@ bool NFA::recognizes(QString str)
             }
         }
 
-        match_transisions = new QVector<int>();
-        dfs = new DirectedDFS(epsilon_transions, match);
-
-        //store the indeces of the marked nodes
-        for (int v = 0; v < epsilon_transions->nodes_number; v++)
-        {
-            if (dfs->mark(v))
-                match_transisions->append(v);
-        }
+        match_transisions = build_reachable_states(match);
     }
 
     //final check if the string matches the regular expression or not
@@ -219,4 +248,19 @@ bool NFA::recognizes(QString str)
             return true;
     }
     return false;
+}
+
+void NFA::search( QFile file )
+{
+
+}
+
+MAP* NFA::get_epsilon_transtions()
+{
+    return epsilon_transtions->get_nodes_list();
+}
+
+NFA::~NFA()
+{
+    delete epsilon_transtions;
 }
