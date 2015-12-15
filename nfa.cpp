@@ -92,7 +92,6 @@ NFA::NFA(QString regular_expression)
             case '+':
             case ')':
             case '?':
-            case ']':
                 epsilon_transtions->add_edge(iii, iii + 1);
         }
     }
