@@ -96,6 +96,9 @@ NFA::NFA(QString regular_expression)
                 epsilon_transtions->add_edge(iii, iii + 1);
         }
     }
+
+    // put dfs to NULL
+    dfs = NULL;
 }
 
 bool NFA::check_range(QString symbol, QChar _char)
