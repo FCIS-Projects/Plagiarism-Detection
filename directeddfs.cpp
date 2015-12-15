@@ -1,53 +1,61 @@
 #include "directeddfs.h"
+#include <algorithm>
 
 DirectedDFS::DirectedDFS(digraph::DirectedGraph *digraph)
 {
-    marked = new QVector<bool>(digraph->get_nodes_number());
+    marked = new bool[digraph->get_nodes_number()];
     this->digraph = digraph;
 }
 
 DirectedDFS::DirectedDFS(digraph::DirectedGraph *digraph, int node)
 {
-    marked = new QVector<bool>(digraph->get_nodes_number());
+    marked = new bool[digraph->get_nodes_number()];
     this->digraph = digraph;
-    dfs(node);
+    search(node);
 }
 
-DirectedDFS::DirectedDFS(digraph::DirectedGraph *digraph, QVector<int> *nodes_list)
+DirectedDFS::DirectedDFS(digraph::DirectedGraph *digraph, QList<int> *nodes_list)
 {
-    marked = new QVector<bool>(digraph->get_nodes_number());
+    marked = new bool[digraph->get_nodes_number()];
     this->digraph = digraph;
     foreach (int node, *nodes_list)
     {
-        dfs(node);
+        search(node);
     }
 }
 
-void DirectedDFS::dfs(int node)
+void DirectedDFS::search(int node)
 {
-    marked->operator [](node) = true;
+    marked[node] = true;
     MAP* nodes_list = digraph->get_nodes_list();
 
     foreach (int child, (*nodes_list)[node].connections )
     {
-        if(!marked->at(child))
+        if(!marked[child])
         {
-            dfs(child);
+            search(child);
         }
     }
 }
 
-void DirectedDFS::dfs(QVector<int> *nodes_list)
+void DirectedDFS::search(QList<int> *nodes_list)
 {
     foreach (int node, *nodes_list)
     {
-        dfs(node);
+        search(node);
     }
 }
 
-bool DirectedDFS::mark(int node)  //to check if the node is reachable or not
+bool DirectedDFS::is_marked(int node)  //to check if the node is reachable or not
 {
-    return marked->at(node);
+    return marked[node];
+}
+
+void DirectedDFS::clear()
+{
+    // restart marked - this is the fastest way
+    // std::fill which is depend on memset
+    std::fill( marked, marked + digraph->get_nodes_number(), false);
 }
 
 DirectedDFS::~DirectedDFS()
