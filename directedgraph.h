@@ -8,19 +8,18 @@ namespace digraph
     struct Node
     {
         int index;
-        QVector<int> connections;
+        QList<int> connections;
     };
 
     class DirectedGraph
     {
     public:
-    //    #define MAP QMap< int, QVector<int>* >
-        #define MAP QVector<digraph::Node>
-        // TODO: this should be private and use get_nodes_number() to get it
+        #define MAP QList<digraph::Node>
 
     private:
         int nodes_number;
         MAP* nodes_list;
+
     protected:
         void check_node_validity(int node);
 
@@ -31,7 +30,6 @@ namespace digraph
 
         int create_node();
         void add_edge( int head, int tail );
-    //    void add_edge( Node* head, Node* tail );
         MAP* get_nodes_list() const;
         int get_nodes_number();
 
