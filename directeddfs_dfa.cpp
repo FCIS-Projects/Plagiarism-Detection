@@ -37,6 +37,9 @@ void DirectedDFS_DFA::search(int node)
 }
 
 QList<int>* DirectedDFS_DFA::get_reachable_states() const
+=======
+QVector<int>* DirectedDFS_DFA::get_reachable_states() const
+>>>>>>> Stashed changes
 {
     return reachable_states;
 }
