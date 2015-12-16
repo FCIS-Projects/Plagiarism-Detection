@@ -1,21 +1,48 @@
 #include "directeddfs_dfa.h"
 
+using namespace digraph;
 
-DirectedDFS_DFA::DirectedDFS_DFA() : DirectedDFS(NULL)
+DirectedDFS_DFA::DirectedDFS_DFA(DirectedGraph *digraph) : DirectedDFS( digraph )
 {
-
 }
 
-void DirectedDFS::dfs(int node)
+DirectedDFS_DFA::DirectedDFS_DFA(DirectedGraph *digraph, int node) : DirectedDFS( digraph, node )
 {
-    marked->operator [](node) = true;
-    MAP* nodes_list = digraph->get_nodes_list();
+}
 
-    foreach (int child, *(*nodes_list)[node])
+DirectedDFS_DFA::DirectedDFS_DFA(DirectedGraph *digraph, QList<int> *node) : DirectedDFS( digraph, node )
+{
+}
+
+void DirectedDFS_DFA::search(int node)
+{
+    MAP* nfa = digraph->get_nodes_list();
+
+    if((*nfa)[node].connections.length() == 0)
     {
-        if(!marked->at(child))
+        reachable_states->append(node);
+//        qDebug("%i", node);
+        return;
+    }
+
+    marked[node] = true;
+
+    foreach (int connection, (*nfa)[node].connections)
+    {
+        if(!marked[connection])
         {
-            dfs(child);
+            search(connection);
         }
     }
+}
+
+QList<int>* DirectedDFS_DFA::get_reachable_states() const
+{
+    return reachable_states;
+}
+
+void DirectedDFS_DFA::clear()
+{
+    DirectedDFS::clear();
+    reachable_states->clear();
 }
