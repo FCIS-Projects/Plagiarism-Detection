@@ -170,7 +170,7 @@ QList<int> * NFA::build_reachable_states(int root)
     dfs->search(root);
 
     //store the indeces of the marked nodes
-    for (int v = 0; v < epsilon_transtions->get_nodes_number(); v++)
+    for (int v = 0; v < epsilon_transtions->get_nodes_list()->length(); v++)
     {
         if (dfs->is_marked(v))
             reachable_states->append(v);
@@ -193,7 +193,7 @@ QList<int> * NFA::build_reachable_states(QList<int>* root)
     dfs->search(root);
 
     //store the indeces of the marked nodes
-    for (int v = 0; v < epsilon_transtions->get_nodes_number(); v++)
+    for (int v = 0; v < epsilon_transtions->get_nodes_list()->length(); v++)
     {
         if (dfs->is_marked(v))
             reachable_states->append(v);

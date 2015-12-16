@@ -16,8 +16,10 @@ namespace digraph
     public:
         #define MAP QList<digraph::Node>
 
-    private:
+    protected:
         int nodes_number;
+
+    private:
         MAP* nodes_list;
 
     protected:
@@ -31,7 +33,6 @@ namespace digraph
         int create_node();
         void add_edge( int head, int tail );
         MAP* get_nodes_list() const;
-        int get_nodes_number();
 
     };
 }

@@ -68,11 +68,6 @@ MAP* DirectedGraph::get_nodes_list() const
     return nodes_list;
 }
 
-int DirectedGraph::get_nodes_number()
-{
-    return nodes_number;
-}
-
 DirectedGraph::~DirectedGraph()
 {
 //    for (int iii = 0; iii < nodes_list->size(); ++iii)
