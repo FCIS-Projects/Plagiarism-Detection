@@ -4,13 +4,13 @@ using namespace digraph;
 
 DirectedGraph::DirectedGraph()
 {
-    nodes_list = new MAP;
+    nodes_list = new QList<Node>;
     nodes_number = 0;
 }
 
 DirectedGraph::DirectedGraph(int nodes_number)
 {
-    nodes_list = new MAP;
+    nodes_list = new QList<Node>;
 
     this->nodes_number = nodes_number;
 
@@ -63,7 +63,7 @@ void DirectedGraph::add_edge(int head, int tail)
 //    QVector<int> *vertex = nodes_list->operator [](head);
 }
 
-MAP* DirectedGraph::get_nodes_list() const
+QList<Node>* DirectedGraph::get_nodes_list() const
 {
     return nodes_list;
 }

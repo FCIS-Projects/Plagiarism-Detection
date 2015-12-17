@@ -22,7 +22,7 @@ DirectedDFS_DFA::DirectedDFS_DFA(DirectedGraph *digraph, QList<int> *node) : Dir
 
 void DirectedDFS_DFA::search(int node)
 {
-    MAP* nfa = digraph->get_nodes_list();
+    QList<digraph::Node>* nfa = digraph->get_nodes_list();
 
     if((*nfa)[node].connections.length() == 0)
     {

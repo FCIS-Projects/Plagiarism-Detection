@@ -14,13 +14,12 @@ namespace digraph
     class DirectedGraph
     {
     public:
-        #define MAP QList<digraph::Node>
 
     protected:
         int nodes_number;
 
     private:
-        MAP* nodes_list;
+        QList<Node>* nodes_list;
 
     protected:
         void check_node_validity(int node);
@@ -32,7 +31,7 @@ namespace digraph
 
         int create_node();
         void add_edge( int head, int tail );
-        MAP* get_nodes_list() const;
+        QList<Node>* get_nodes_list() const;
 
     };
 }

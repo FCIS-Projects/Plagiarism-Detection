@@ -257,7 +257,7 @@ void NFA::search( QFile file )
 
 }
 
-MAP* NFA::get_epsilon_transtions()
+QList<digraph::Node>* NFA::get_epsilon_transtions()
 {
     return epsilon_transtions->get_nodes_list();
 }

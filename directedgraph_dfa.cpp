@@ -4,7 +4,7 @@ using namespace dfa_digraph;
 
 DirectedGraph_DFA::DirectedGraph_DFA() : DirectedGraph()
 {
-    nodes_list = new DFA_MAP;
+    nodes_list = new QList<Node>;
 }
 
 int DirectedGraph_DFA::create_node()
@@ -41,7 +41,7 @@ void DirectedGraph_DFA::add_edge( int head, int tail )
     (*nodes_list)[head].connections.append(tail);
 }
 
-DFA_MAP* DirectedGraph_DFA::get_nodes_list()
+QList<Node>* DirectedGraph_DFA::get_nodes_list()
 {
     return nodes_list;
 }

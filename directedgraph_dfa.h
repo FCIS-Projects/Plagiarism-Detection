@@ -18,20 +18,15 @@ namespace dfa_digraph
     public:
         DirectedGraph_DFA();
         ~DirectedGraph_DFA();
-    
-    
-        #define DFA_MAP QList< dfa_digraph::Node >
-    
-//        void build_reachable_states(int node);
-//        void build_reachable_states(QVector<int>* nodes);
+
         int create_node();
         void add_edge( int head, int tail );
     
     private:
-        DFA_MAP* nodes_list;
+        QList< dfa_digraph::Node >* nodes_list;
     
     public:
-        DFA_MAP* get_nodes_list();
+        QList< dfa_digraph::Node >* get_nodes_list();
     };
 }
     

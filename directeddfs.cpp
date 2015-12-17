@@ -27,7 +27,7 @@ DirectedDFS::DirectedDFS(digraph::DirectedGraph *digraph, QList<int> *nodes_list
 void DirectedDFS::search(int node)
 {
     marked[node] = true;
-    MAP* nodes_list = digraph->get_nodes_list();
+    QList<digraph::Node>* nodes_list = digraph->get_nodes_list();
 
     foreach (int child, (*nodes_list)[node].connections )
     {
