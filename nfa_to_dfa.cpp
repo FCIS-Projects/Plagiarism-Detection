@@ -1,6 +1,6 @@
 #include "nfa_to_dfa.h"
-#include <QVector>
-#include <iterator>
+//#include <QVector>
+//#include <iterator>
 
 //QVector<int> * build_reachable_states(QVector<int>* root)
 //{
@@ -34,53 +34,78 @@
 //    return reachable_states;
 //}
 
-NFA_TO_DFA::NFA_TO_DFA(MAP* nfa, int root)
+NFA_TO_DFA::NFA_TO_DFA(digraph::DirectedGraph* nfa_digraph, int root)
 {
-    this->nfa = nfa;
+    this->nfa_digraph = nfa_digraph;
+
+    this->nfa = nfa_digraph->get_nodes_list();
     this->root = root;
-    reachable_states = new QVector<int>;
-    marked = new QVector<int>(nfa->size());
+
+    dfs = new DirectedDFS_DFA(nfa_digraph);
+    dfa_digraph = new dfa_digraph::DirectedGraph_DFA();
+    this->dfa = dfa_digraph->get_nodes_list();
+//    reachable_states = new QVector<int>;
+//    marked = new QVector<int>(nfa->size());
 }
 
-//void NFA_TO_DFA::build_dfa()
-//{
-//    int current_node = this->root;
+void NFA_TO_DFA::build_dfa()
+{
 
-//    build_reachable_states(current_node);
+    int head = root;
+    int tail = root;
 
-//    Node *head = NULL;
-//    Node *tail = NULL;
+    while(true)
+    {
+    //    build_reachable_states(current_node);
+        dfs->search(head);
 
-//    // Create Initial Node
-//    head = new Node();
-//    dfa->insert(-1, head);
+        // Create Initial Node
+        dfa_digraph->create_node();
 
-//    foreach (int node, *reachable_states)
-//    {
-//        // TODO: check if this node already created
-//        if( node != nfa->size() )
-//        {
-//            // make connection
-//            head->next_state.append(node);
+        QVector<bool> *created_nodes = dfs->get_created_nodes();
 
-//            // Build new Node
-//            tail = new Node();
-//            dfa->insert(node, child_node);
-//        }
+        foreach (int node, *dfs->get_reachable_states())
+        {
+            if( node == nfa->size() - 1 )
+            {
+                // mark current node as final node
+                (*dfa)[head].is_finial_state = true;
+            }
+
+            // TODO: check if this node already created
+            else if( node != nfa->size() && !( created_nodes->at(node) ) )
+            {
+                // Build new Node
+                dfa_digraph->create_node();
+    //            qDebug("%i", dfa->length());
+                tail = dfa->last().index;
+
+                // make connection
+                dfa_digraph->add_edge(head, tail);
+
+                // connect to coresponding alpha in the regular expression
+                (*dfa)[tail].match_transitions.append(node);
+    //            head->next_state.append(node);
+
+    //            tail = new Node();
+    //            dfa->insert(node, child_node);
+            }
+
+            else if(created_nodes->at(node))
+            {
+                dfa_digraph->add_edge(head, tail);
+            }
 
 
-//        if( node == nfa->size() )
-//        {
-//            _node->is_finial_state = true;
-//        }
-//    }
+        }
+    }
 
 
 
 //    // restart vectors like creating new one
 //    reachable_states->resize(0);
 //    marked->resize(0);
-//}
+}
 
     // build our DFA here
 //    QVector<int> *dfa = new QVector<int>;
