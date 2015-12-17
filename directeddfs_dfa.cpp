@@ -4,14 +4,17 @@ using namespace digraph;
 
 DirectedDFS_DFA::DirectedDFS_DFA(DirectedGraph *digraph) : DirectedDFS( digraph )
 {
+    reachable_states = new QList<int>;
 }
 
 DirectedDFS_DFA::DirectedDFS_DFA(DirectedGraph *digraph, int node) : DirectedDFS( digraph, node )
 {
+    reachable_states = new QList<int>;
 }
 
 DirectedDFS_DFA::DirectedDFS_DFA(DirectedGraph *digraph, QList<int> *node) : DirectedDFS( digraph, node )
 {
+    reachable_states = new QList<int>;
 }
 
 void DirectedDFS_DFA::search(int node)
@@ -21,7 +24,6 @@ void DirectedDFS_DFA::search(int node)
     if((*nfa)[node].connections.length() == 0)
     {
         reachable_states->append(node);
-//        qDebug("%i", node);
         return;
     }
 
@@ -37,9 +39,6 @@ void DirectedDFS_DFA::search(int node)
 }
 
 QList<int>* DirectedDFS_DFA::get_reachable_states() const
-=======
-QVector<int>* DirectedDFS_DFA::get_reachable_states() const
->>>>>>> Stashed changes
 {
     return reachable_states;
 }
