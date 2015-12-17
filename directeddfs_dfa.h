@@ -3,7 +3,7 @@
 #include "directeddfs.h"
 #include <QVector>
 
-class DirectedDFS_DFA : DirectedDFS
+class DirectedDFS_DFA : private DirectedDFS
 {
 private:
     QList<int>* reachable_states;
@@ -12,7 +12,7 @@ private:
 public:
     DirectedDFS_DFA(digraph::DirectedGraph *digraph);
     DirectedDFS_DFA(digraph::DirectedGraph *digraph, int node);
-    DirectedDFS_DFA(digraph::DirectedGraph *digraph, QList<int> *nodes_list);
+//    DirectedDFS_DFA(digraph::DirectedGraph *digraph, QList<int> *nodes_list);
     ~DirectedDFS_DFA();
 
     void search(int node);

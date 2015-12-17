@@ -13,7 +13,7 @@ namespace dfa_digraph
         QList<int> match_transitions;
     };
     
-    class DirectedGraph_DFA : public digraph::DirectedGraph
+    class DirectedGraph_DFA : private digraph::DirectedGraph
     {
     public:
         DirectedGraph_DFA();

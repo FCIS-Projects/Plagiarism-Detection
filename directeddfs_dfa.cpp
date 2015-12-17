@@ -14,11 +14,11 @@ DirectedDFS_DFA::DirectedDFS_DFA(DirectedGraph *digraph, int node) : DirectedDFS
     created_nodes = new QVector<bool>(digraph->get_nodes_list()->length());
 }
 
-DirectedDFS_DFA::DirectedDFS_DFA(DirectedGraph *digraph, QList<int> *node) : DirectedDFS( digraph, node )
-{
-    reachable_states = new QList<int>;
-    created_nodes = new QVector<bool>(digraph->get_nodes_list()->length());
-}
+//DirectedDFS_DFA::DirectedDFS_DFA(DirectedGraph *digraph, QList<int> *node) : DirectedDFS( digraph, node )
+//{
+//    reachable_states = new QList<int>;
+//    created_nodes = new QVector<bool>(digraph->get_nodes_list()->length());
+//}
 
 void DirectedDFS_DFA::search(int node)
 {
