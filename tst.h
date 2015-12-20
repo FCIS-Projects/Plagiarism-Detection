@@ -3,13 +3,14 @@
 
 #include <QString>
 #include <QList>
+#include <QChar>
 
 namespace tries
 {
     struct Node
     {
         int value;
-        char character;
+        QChar character;
 
         Node* left;
         Node* middle;
