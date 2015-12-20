@@ -8,14 +8,18 @@
 class NFA_TO_DFA
 {
 private:
-//    QVector<int>* reachable_states;
-//    QVector<int>* marked;
     digraph::DirectedGraph* nfa_digraph;
-    dfa_digraph::DirectedGraph_DFA* dfa_digraph;
     QList<digraph::Node> *nfa;
+    dfa_digraph::DirectedGraph_DFA* dfa_digraph;
     QList<dfa_digraph::Node> *dfa;
+
     int root;
     DirectedDFS_DFA* dfs;
+
+    // This has 2 uses,
+    // #1 it append created node, to if it is already created
+    // #2 if the node created, append the corrsponding dfa node to it
+    QVector<int>* nfa_dfa_nodes;
 
 public:
 //    struct Node

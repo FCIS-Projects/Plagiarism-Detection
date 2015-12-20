@@ -30,7 +30,7 @@ public:
     void search( QFile file );
     QList<int> * build_reachable_states(int root);
     QList<int> * build_reachable_states(QList<int>* root);
-    QList<digraph::Node>* get_epsilon_transtions();
+    digraph::DirectedGraph* get_epsilon_transtions();
 };
 
 #endif // NFA_H

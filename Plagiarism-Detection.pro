@@ -11,6 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = Plagiarism-Detection
 TEMPLATE = app
 
+CONFIG += c++11
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -20,7 +21,8 @@ SOURCES += main.cpp\
     directeddfs.cpp \
     nfa_to_dfa.cpp \
     directedgraph_dfa.cpp \
-    directeddfs_dfa.cpp
+    directeddfs_dfa.cpp \
+    tst.cpp
 
 HEADERS  += mainwindow.h \
     nfa.h \
@@ -29,6 +31,7 @@ HEADERS  += mainwindow.h \
     directeddfs.h \
     nfa_to_dfa.h \
     directedgraph_dfa.h \
-    directeddfs_dfa.h
+    directeddfs_dfa.h \
+    tst.h
 
 FORMS    += mainwindow.ui

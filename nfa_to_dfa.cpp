@@ -44,67 +44,59 @@ NFA_TO_DFA::NFA_TO_DFA(digraph::DirectedGraph* nfa_digraph, int root)
     dfs = new DirectedDFS_DFA(nfa_digraph);
     dfa_digraph = new dfa_digraph::DirectedGraph_DFA();
     this->dfa = dfa_digraph->get_nodes_list();
-//    reachable_states = new QVector<int>;
-//    marked = new QVector<int>(nfa->size());
+
+    nfa_dfa_nodes = new QVector<int>(nfa_digraph->get_nodes_list()->length(), -1);
 }
 
 void NFA_TO_DFA::build_dfa()
 {
-
-    int head = root;
     int tail = root;
 
-    while(true)
+    QList<int>* start_nodes = new QList<int>;
+
+    // Create Initial Node
+    dfa_digraph->create_node();
+    (*nfa_dfa_nodes)[root] = root;
+    start_nodes->append(root);
+
+    for(int iii = 0; iii < start_nodes->length(); iii++ )
     {
-    //    build_reachable_states(current_node);
-        dfs->search(head);
+        if( dfs->get_reachable_states()->length() != 0 )
+            dfs->clear();
 
-        // Create Initial Node
-        dfa_digraph->create_node();
-
-        QVector<bool> *created_nodes = dfs->get_created_nodes();
+        dfs->search((*start_nodes)[iii]);
 
         foreach (int node, *dfs->get_reachable_states())
         {
             if( node == nfa->size() - 1 )
             {
                 // mark current node as final node
-                (*dfa)[head].is_finial_state = true;
+                (*dfa)[iii].is_finial_state = true;
             }
 
-            // TODO: check if this node already created
-            else if( node != nfa->size() && !( created_nodes->at(node) ) )
+            else if( node != nfa->size() - 1 && nfa_dfa_nodes->at(node) == -1 )
             {
                 // Build new Node
                 dfa_digraph->create_node();
-    //            qDebug("%i", dfa->length());
+
                 tail = dfa->last().index;
+                (*nfa_dfa_nodes)[node] = tail;
 
                 // make connection
-                dfa_digraph->add_edge(head, tail);
+                dfa_digraph->add_edge(iii, tail);
 
                 // connect to coresponding alpha in the regular expression
                 (*dfa)[tail].match_transitions.append(node);
-    //            head->next_state.append(node);
 
-    //            tail = new Node();
-    //            dfa->insert(node, child_node);
+                start_nodes->append(node + 1);
             }
 
-            else if(created_nodes->at(node))
+            else if(nfa_dfa_nodes->at(node) != -1)
             {
-                dfa_digraph->add_edge(head, tail);
+                dfa_digraph->add_edge(iii, nfa_dfa_nodes->at(node));
             }
-
-
         }
     }
-
-
-
-//    // restart vectors like creating new one
-//    reachable_states->resize(0);
-//    marked->resize(0);
 }
 
     // build our DFA here
