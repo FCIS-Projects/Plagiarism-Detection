@@ -64,3 +64,40 @@ Node* TST::insert(Node* node, QString key, int value, int char_index)
 
     return node;
 }
+
+QString TST::match(QString str)
+{
+    QString key("");
+    search(root, 0, key, str);
+    return key;
+}
+
+void TST::search(Node *node, int index, QString str, QString match)
+{
+    if(node == NULL)
+        return;
+    QChar character = match[index];
+    if(character < node->character)
+    {
+        search(node->left, index, str, match);
+    }
+
+    else if(character > node->character)
+    {
+        search(node->right, index, str, match);
+    }
+
+    else
+    {
+        if(index < str.length()-1)
+        {
+            match.operator +=(character);
+            search(node->middle, index+1, str, match);
+        }
+        else if (index == str.length()-1 && node->value != NULL)
+        {
+            match.operator +=(character);
+            return;
+        }
+    }
+}

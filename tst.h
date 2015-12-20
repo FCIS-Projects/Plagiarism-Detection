@@ -29,9 +29,11 @@ namespace tries
         int get(QString key);
         void insert(QString key, int value);
         Node* insert(Node* node, QString key, int value, int char_index);
+        QString match(QString str);
 
     private:
         Node* get(Node* node, QString key, int char_index);
+        void search(Node* node, int index, QString str, QString match);
     };
 }
 
