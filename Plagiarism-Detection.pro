@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     nfa_to_dfa.cpp \
     directedgraph_dfa.cpp \
     directeddfs_dfa.cpp \
-    tst.cpp
+    tst.cpp \
+    dfa_search.cpp
 
 HEADERS  += mainwindow.h \
     nfa.h \
@@ -32,6 +33,7 @@ HEADERS  += mainwindow.h \
     nfa_to_dfa.h \
     directedgraph_dfa.h \
     directeddfs_dfa.h \
-    tst.h
+    tst.h \
+    dfa_search.h
 
 FORMS    += mainwindow.ui
