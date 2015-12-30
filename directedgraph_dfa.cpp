@@ -30,14 +30,6 @@ void DirectedGraph_DFA::add_edge( int head, int tail )
     DirectedGraph::check_node_validity(head);
     DirectedGraph::check_node_validity(tail);
 
-//    if( dfa->size() == 0 && (*dfa)[tail] != NULL )
-//    QVector<int> *vertex = dfa->operator [](head);
-
-
-//    tail_node->next_state.append(tail);
-//    Node *tail_node = new Node;
-//    dfa->insert(-1, tail_node);
-
     (*nodes_list)[head].connections.append(tail);
 }
 

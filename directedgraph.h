@@ -5,10 +5,14 @@
 
 namespace digraph
 {
+    const short EPSILON_TRANS = 0;
+    const short MATCH_TRANS = 1;
+
     struct Node
     {
         int index;
-        QList<int> connections;
+        QList<int> epsilon_transtions;
+        QList<int> match_transtions;
     };
 
     class DirectedGraph
@@ -30,7 +34,7 @@ namespace digraph
         ~DirectedGraph();
 
         int create_node();
-        void add_edge( int head, int tail );
+        void add_edge( int head, int tail, short type );
         QList<Node>* get_nodes_list() const;
 
     };

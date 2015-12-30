@@ -20,6 +20,8 @@ public:
     NFA(QString regular_expression);
     ~NFA();
 
+    void build_nfa(QString regular_expression);
+
     //function to recognize the string belongs to the regular expression or invalid
     bool recognizes(QString str);
 

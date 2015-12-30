@@ -28,18 +28,30 @@ void DirectedDFS_DFA::search(int node)
 {
     QList<digraph::Node>* nfa = digraph->get_nodes_list();
 
-    if((*nfa)[node].connections.length() == 0)
+    // has no epsilon transition and no match transition ? final state
+    // has no epsilon transition but has match transition ? append with return
+    // has epsilon transition but no match transition ? neglect
+    // has epsilon transition(s) and match transition(s) ? append without return
+    if( (*nfa)[node].epsilon_transtions.length() == 0 )
     {
-        // TODO: get the first 'node' value and use it as index
-        // for list_of_reachable_states
-        reachable_states_list->append(node);
+        if((*nfa)[node].match_transtions.length() == 0 )
+            reachable_states_list->append(node);
 
-        return;
+        else
+        {
+            reachable_states_list->append(node);
+            return;
+        }
+    }
+
+    else if( (*nfa)[node].match_transtions.length() != 0 )
+    {
+        reachable_states_list->append(node);
     }
 
     marked[node] = true;
 
-    foreach (int connection, (*nfa)[node].connections)
+    foreach (int connection, (*nfa)[node].epsilon_transtions)
     {
         if(!marked[connection])
         {

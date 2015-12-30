@@ -29,7 +29,7 @@ void DirectedDFS::search(int node)
     marked[node] = true;
     QList<digraph::Node>* nodes_list = digraph->get_nodes_list();
 
-    foreach (int child, (*nodes_list)[node].connections )
+    foreach (int child, (*nodes_list)[node].epsilon_transtions )
     {
         if(!marked[child])
         {

@@ -16,7 +16,6 @@ DirectedGraph::DirectedGraph(int nodes_number)
 
     for (int iii = 0; iii < nodes_number; ++iii)
     {
-//        nodes_list->insert(iii, new QVector<int>);
         nodes_list->append( (*new Node) );
         (*nodes_list)[iii].index = iii;
     }
@@ -46,21 +45,15 @@ void DirectedGraph::check_node_validity(int node)
     }
 }
 
-void DirectedGraph::add_edge(int head, int tail)
+void DirectedGraph::add_edge( int head, int tail, short type )
 {
     check_node_validity(head);
     check_node_validity(tail);
 
-//    if( nodes_number == 0 )
-//    {
-//        nodes_list->append( (*new Node) );
-//        (*nodes_list)[tail].index = tail;
-//    }
-//        nodes_list->insert(head, new QVector<int>);
-
-    (*nodes_list)[head].connections.append(tail);
-//    vertex->append(tail);
-//    QVector<int> *vertex = nodes_list->operator [](head);
+    if( type == EPSILON_TRANS )
+        (*nodes_list)[head].epsilon_transtions.append(tail);
+    else if( type == MATCH_TRANS )
+        (*nodes_list)[head].match_transtions.append(tail);
 }
 
 QList<Node>* DirectedGraph::get_nodes_list() const
@@ -70,10 +63,5 @@ QList<Node>* DirectedGraph::get_nodes_list() const
 
 DirectedGraph::~DirectedGraph()
 {
-//    for (int iii = 0; iii < nodes_list->size(); ++iii)
-//    {
-//        delete (*nodes_list)[iii];
-//    }
-
     delete nodes_list;
 }
