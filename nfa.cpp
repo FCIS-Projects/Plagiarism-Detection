@@ -14,7 +14,9 @@ NFA::NFA()
 NFA::NFA(QString regular_expression)
 {
     /* Building the automaton for the regular expression */
-    this->regular_expression = regular_expression;
+    this->regular_expression = '(' + regular_expression + ')';
+    regular_expression = this->regular_expression;
+
 
     // we add another node to the regular expression length
     // to handle 'Accept State'
@@ -120,7 +122,8 @@ NFA::NFA(QString regular_expression)
 void NFA::build_nfa(QString regular_expression)
 {
     /* Building the automaton for the regular expression */
-    this->regular_expression = regular_expression;
+    this->regular_expression = '(' + regular_expression + ')';
+    regular_expression = this->regular_expression;
 
     // we add another node to the regular expression length
     // to handle 'Accept State'
