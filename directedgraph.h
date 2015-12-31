@@ -13,6 +13,7 @@ namespace digraph
         int index;
         QList<int> epsilon_transtions;
         QList<int> match_transtions;
+        QChar value;
     };
 
     class DirectedGraph
@@ -36,6 +37,7 @@ namespace digraph
         int create_node();
         void add_edge( int head, int tail, short type );
         QList<Node>* get_nodes_list() const;
+        void set_node_value(int index, QChar _char);
 
     };
 }

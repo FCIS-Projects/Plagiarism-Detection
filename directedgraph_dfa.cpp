@@ -38,6 +38,11 @@ QList<Node>* DirectedGraph_DFA::get_nodes_list()
     return nodes_list;
 }
 
+void DirectedGraph_DFA::set_node_value(int index, QChar _char)
+{
+    (*nodes_list)[index].match_transitions.append( _char );
+}
+
 DirectedGraph_DFA::~DirectedGraph_DFA()
 {
 

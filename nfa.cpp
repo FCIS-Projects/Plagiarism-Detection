@@ -13,107 +13,7 @@ NFA::NFA()
 
 NFA::NFA(QString regular_expression)
 {
-    /* Building the automaton for the regular expression */
-    this->regular_expression = '(' + regular_expression + ')';
-    regular_expression = this->regular_expression;
-
-
-    // we add another node to the regular expression length
-    // to handle 'Accept State'
-    epsilon_transtions = new DirectedGraph(regular_expression.length() + 1);
-
-    // the stack of postfix
-    QStack<int> *operations = new QStack<int>();
-    this->number_of_states = regular_expression.length();
-
-    for (int iii = 0; iii < number_of_states; ++iii)
-    {
-        int current_index = iii;
-
-        // handling 'range'
-        if( regular_expression[iii] == '[' )
-        {
-            int kkk;
-            for (kkk = iii; regular_expression[kkk] != ']'; ++kkk);
-            epsilon_transtions->add_edge(iii, kkk, EPSILON_TRANS);
-            epsilon_transtions->add_edge(kkk, kkk + 1, EPSILON_TRANS);
-            iii = kkk;
-            current_index = iii;
-        }
-
-        // this uses the concept of postfix to handl '(', ')' and '|'
-        else if( regular_expression[iii] == '(' || regular_expression[iii] == '|' )
-            operations->push(iii);
-
-        else if( regular_expression[iii] == ')' )
-        {
-            int pop = operations->pop();
-
-            if( regular_expression[pop] == '|' )
-            {
-                current_index = operations->pop();
-                epsilon_transtions->add_edge(current_index, pop + 1, EPSILON_TRANS);
-                epsilon_transtions->add_edge(pop, iii, EPSILON_TRANS);
-            }
-
-            else
-                current_index = pop;
-        }
-
-        else if( iii < number_of_states - 1 )
-        {
-            // handling epsilon_transions of '*'
-            // we have 2 options
-            // option 1: AB*
-            // option 2: (AB)* and this one will use 'current_index = pop'
-            if( regular_expression[iii + 1] == '*' )
-            {
-                epsilon_transtions->add_edge(current_index, iii + 1, EPSILON_TRANS);
-                epsilon_transtions->add_edge(iii + 1, current_index, EPSILON_TRANS);
-//                if( regular_expression[iii - 1] != '(' )
-//                    epsilon_transtions->add_edge( iii, iii + 1, MATCH_TRANS );
-            }
-
-            // handling epsilon_transions of '?'
-            // we have 2 options
-            // option 1: A?B
-            // option 2: (AB)? and this one will use 'current_index = pop'
-            else if( regular_expression[iii + 1] == '?' )
-            {
-                epsilon_transtions->add_edge(current_index, iii + 1, EPSILON_TRANS);
-//                if( regular_expression[iii - 1] != '(' )
-//                    epsilon_transtions->add_edge( iii, iii + 1, MATCH_TRANS );
-            }
-
-            // handling epsilon_transions of '+'
-            // we have 2 options
-            // option 1: AB+
-            // option 2: (AB)+ and this one will use 'current_index = pop'
-            else if( regular_expression[iii + 1] == '+' )
-            {
-                epsilon_transtions->add_edge(iii + 1, current_index, EPSILON_TRANS);
-//                if( regular_expression[iii - 1] != '(' )
-//                    epsilon_transtions->add_edge( iii, iii + 1, MATCH_TRANS );
-            }
-        }
-
-        // handling '(', '*', '+', ')', '?'
-        switch(regular_expression[iii].toLatin1())
-        {
-            case '(':
-            case '*':
-            case '+':
-            case ')':
-            case '?':
-                epsilon_transtions->add_edge(iii, iii + 1, EPSILON_TRANS);
-                break;
-            case '|':
-            case '[':
-                break;
-            default:
-                epsilon_transtions->add_edge(iii, iii + 1, MATCH_TRANS);
-        }
-    }
+    build_nfa(regular_expression);
 
     // put dfs to NULL
     dfs = NULL;
@@ -136,12 +36,18 @@ void NFA::build_nfa(QString regular_expression)
     for (int iii = 0; iii < number_of_states; ++iii)
     {
         int current_index = iii;
+        epsilon_transtions->set_node_value(iii, regular_expression[iii]);
 
         // handling 'range'
         if( regular_expression[iii] == '[' )
         {
             int kkk;
-            for (kkk = iii; regular_expression[kkk] != ']'; ++kkk);
+            for (kkk = iii + 1; regular_expression[kkk] != ']'; ++kkk)
+            {
+                epsilon_transtions->set_node_value(kkk, regular_expression[kkk]);
+            }
+
+            epsilon_transtions->set_node_value(kkk, regular_expression[kkk]);
             epsilon_transtions->add_edge(iii, kkk, EPSILON_TRANS);
             epsilon_transtions->add_edge(kkk, kkk + 1, EPSILON_TRANS);
             iii = kkk;

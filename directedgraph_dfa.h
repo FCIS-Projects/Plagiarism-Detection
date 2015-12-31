@@ -10,7 +10,7 @@ namespace dfa_digraph
         int index;
         QList<int> connections;
         bool is_finial_state;
-        QList<int> match_transitions;
+        QList<QChar> match_transitions;
     };
     
     class DirectedGraph_DFA : private digraph::DirectedGraph
@@ -27,6 +27,7 @@ namespace dfa_digraph
     
     public:
         QList< dfa_digraph::Node >* get_nodes_list();
+        void set_node_value(int index, QChar _char);
     };
 }
     

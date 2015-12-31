@@ -52,7 +52,7 @@ void NFA_TO_DFA::build_dfa()
                 dfa_digraph->add_edge(iii, tail);
 
                 // connect to coresponding alpha in the regular expression
-                (*dfa)[tail].match_transitions.append(node);
+                (*dfa)[tail].match_transitions.append((*nfa)[node].value);
 
                 start_nodes->append(node + 1);
             }

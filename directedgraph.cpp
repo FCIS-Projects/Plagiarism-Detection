@@ -61,6 +61,11 @@ QList<Node>* DirectedGraph::get_nodes_list() const
     return nodes_list;
 }
 
+void DirectedGraph::set_node_value(int index, QChar _char)
+{
+    (*nodes_list)[index].value = _char;
+}
+
 DirectedGraph::~DirectedGraph()
 {
     delete nodes_list;
