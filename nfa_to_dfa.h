@@ -4,6 +4,7 @@
 #include "directedgraph_dfa.h"
 #include "directeddfs_dfa.h"
 #include <QList>
+#include <QString>
 
 class NFA_TO_DFA
 {

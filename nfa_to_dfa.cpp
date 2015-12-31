@@ -54,7 +54,7 @@ void NFA_TO_DFA::build_dfa()
                 if( (*nfa)[node].value == ']' )
                 {
                     int index = node;
-                    QString range = "";
+                    QString range("");
 
                     while( (*nfa)[index].value != '[' )
                     {

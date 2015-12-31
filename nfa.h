@@ -25,14 +25,14 @@ public:
     //function to recognize the string belongs to the regular expression or invalid
     bool recognizes(QString str);
 
-    // check if _char is within a range defined with 'symbol'
-    bool check_range(QString symbol, QChar _char);
-
     void search( QString *str, int index );
     void search( QFile file );
     QList<int> * build_reachable_states(int root);
     QList<int> * build_reachable_states(QList<int>* root);
     digraph::DirectedGraph* get_epsilon_transtions();
+
+    // check if _char is within a range defined with 'symbol'
+    static bool check_range(QString symbol, QChar _char);
 };
 
 #endif // NFA_H

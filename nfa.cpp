@@ -49,7 +49,7 @@ void NFA::build_nfa(QString regular_expression)
 
             epsilon_transtions->set_node_value(kkk, regular_expression[kkk]);
             epsilon_transtions->add_edge(iii, kkk, EPSILON_TRANS);
-            epsilon_transtions->add_edge(kkk, kkk + 1, EPSILON_TRANS);
+//            epsilon_transtions->add_edge(kkk, kkk + 1, EPSILON_TRANS);
             iii = kkk;
             current_index = iii;
         }
@@ -73,7 +73,7 @@ void NFA::build_nfa(QString regular_expression)
                 current_index = pop;
         }
 
-        else if( iii < number_of_states - 1 )
+        if( iii < number_of_states - 1 )
         {
             // handling epsilon_transions of '*'
             // we have 2 options

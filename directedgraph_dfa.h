@@ -2,6 +2,7 @@
 #define DIRECTEDGRAPH_DFA_H
 #include "directedgraph.h"
 #include <QList>
+#include <QString>
 
 namespace dfa_digraph
 {
