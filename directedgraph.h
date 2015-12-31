@@ -1,6 +1,6 @@
 #ifndef DIRECTEDGRAPH_H
 #define DIRECTEDGRAPH_H
-
+#include <QChar>
 #include <QVector>
 
 namespace digraph
