@@ -64,3 +64,8 @@ void NFA_TO_DFA::build_dfa()
         }
     }
 }
+
+dfa_digraph::DirectedGraph_DFA* get_dfa_nodes()
+{
+    return dfa_digraph;
+}

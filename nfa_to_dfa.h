@@ -32,6 +32,7 @@ public:
 
     NFA_TO_DFA(digraph::DirectedGraph* digraph_nfa, int root);
     void build_dfa();
+    dfa_digraph::DirectedGraph_DFA* get_dfa_nodes();
 //    void build_reachable_states(int node);
 //    void build_reachable_states(QVector<int>* nodes);
 };
