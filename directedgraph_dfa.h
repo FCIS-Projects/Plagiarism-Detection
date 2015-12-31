@@ -10,7 +10,7 @@ namespace dfa_digraph
         int index;
         QList<int> connections;
         bool is_finial_state;
-        QList<QChar> match_transitions;
+        QList<QString> match_transitions;
     };
     
     class DirectedGraph_DFA : private digraph::DirectedGraph

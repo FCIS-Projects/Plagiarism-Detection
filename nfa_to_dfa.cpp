@@ -51,8 +51,24 @@ void NFA_TO_DFA::build_dfa()
                 // make connection
                 dfa_digraph->add_edge(iii, tail);
 
-                // connect to coresponding alpha in the regular expression
-                (*dfa)[tail].match_transitions.append((*nfa)[node].value);
+                if( (*nfa)[node].value == ']' )
+                {
+                    int index = node;
+                    QString range = "";
+
+                    while( (*nfa)[index].value != '[' )
+                    {
+                        range.prepend( (*nfa)[index].value );
+                        index--;
+                    }
+
+                    range.prepend( (*nfa)[index].value );
+                    (*dfa)[tail].match_transitions.append(range);
+                }
+
+                else
+                    // connect to coresponding alpha in the regular expression
+                    (*dfa)[tail].match_transitions.append((*nfa)[node].value);
 
                 start_nodes->append(node + 1);
             }
