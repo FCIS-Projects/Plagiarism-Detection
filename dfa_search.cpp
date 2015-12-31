@@ -8,30 +8,115 @@ DFA_Search::DFA_Search(dfa_digraph::DirectedGraph_DFA *digraph, QString *regex )
     dfa = digraph->get_nodes_list();
 }
 
-bool DFA_Search::search(QString *str)
+bool DFA_Search::search(QString str)
 {
-    bool is_dismatch = false;
-    int index = 0;
-    int str_index = 0;
-    int regex_index = 0;
+      bool flag = false;
+      int index = 0;
 
-    while( !is_dismatch )
-    {
-        foreach (int node_index, (*dfa)[index].connections)
-        {
-            regex_index = (*dfa)[node_index].match_transitions[0];
+      for (int counter = 0; counter < str.length(); counter++)
+      {
+          foreach (int node_index, (*dfa)[index].connections)
+          {
+              if(str[counter] == (*dfa)[node_index].match_transitions[0][0]||
+                      (*dfa)[node_index].match_transitions[0][0] == '.')
+              {
+                  if (counter == str.length()-1)
+                  {
+                      if ((*dfa)[node_index].is_finial_state)
+                      {
+                          flag = true;
+                          break;
+                      }
+                  }
+                  index = (*dfa)[node_index].index;
+                  break;
+              }
+              else if ((*dfa)[node_index].match_transitions[0][0] == '[')
+              {
+//                  QString range ;
+//                  for (int iii = 0; (*dfa)[node_index].match_transitions[0][iii] != ']'; iii++)
+//                  {
+//                      range = (*dfa)[node_index].match_transitions[0][iii] + range;
+//                  }
 
-            if( (*regex)[regex_index] == str->at(str_index) )
-            {
-                index = (*dfa)[node_index].index;
-                is_dismatch == true;
-                break;
-            }
+//                  range = range + ']';
 
-            else
-                is_dismatch == false;
-        }
+                  if (NFA::check_range((*dfa)[node_index].match_transitions[0], str[counter]))
+                  {
+                      if (counter == str.length()-1)
+                      {
+                          if ((*dfa)[node_index].is_finial_state)
+                          {
+                              flag = true;
+                              break;
+                          }
+                      }
+                      index = (*dfa)[node_index].index;
+                      break;
+                  }
+                  else
+                      return false;
 
-        str_index++;
-    }
+              }
+
+          }
+      }
+      return flag;
+
+}
+bool DFA_Search::search(QString str)
+{
+      bool flag = false;
+      int index = 0;
+
+      for (int counter = 0; counter < str.length(); counter++)
+      {
+          foreach (int node_index, (*dfa)[index].connections)
+          {
+              if(str[counter] == (*dfa)[node_index].match_transitions[0][0]||
+                      (*dfa)[node_index].match_transitions[0][0] == '.')
+              {
+                  if (counter == str.length()-1)
+                  {
+                      if ((*dfa)[node_index].is_finial_state)
+                      {
+                          flag = true;
+                          break;
+                      }
+                  }
+                  index = (*dfa)[node_index].index;
+                  break;
+              }
+              else if ((*dfa)[node_index].match_transitions[0][0] == '[')
+              {
+//                  QString range ;
+//                  for (int iii = 0; (*dfa)[node_index].match_transitions[0][iii] != ']'; iii++)
+//                  {
+//                      range = (*dfa)[node_index].match_transitions[0][iii] + range;
+//                  }
+
+//                  range = range + ']';
+
+                  if (NFA::check_range((*dfa)[node_index].match_transitions[0], str[counter]))
+                  {
+                      if (counter == str.length()-1)
+                      {
+                          if ((*dfa)[node_index].is_finial_state)
+                          {
+                              flag = true;
+                              break;
+                          }
+                      }
+                      index = (*dfa)[node_index].index;
+                      break;
+                  }
+                  else
+                      return false;
+
+              }
+
+          }
+      }
+      return flag;
+
 }
