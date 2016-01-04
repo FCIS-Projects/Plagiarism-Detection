@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     directedgraph_dfa.cpp \
     directeddfs_dfa.cpp \
     tst.cpp \
-    dfa_search.cpp
+    dfa_search.cpp \
+    search_using_regex.cpp
 
 HEADERS  += mainwindow.h \
     nfa.h \
@@ -34,6 +35,7 @@ HEADERS  += mainwindow.h \
     directedgraph_dfa.h \
     directeddfs_dfa.h \
     tst.h \
-    dfa_search.h
+    dfa_search.h \
+    search_using_regex.h
 
 FORMS    += mainwindow.ui
