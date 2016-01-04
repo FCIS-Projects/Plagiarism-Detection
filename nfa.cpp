@@ -281,11 +281,6 @@ bool NFA::recognizes(QString str)
     return false;
 }
 
-void NFA::search( QFile file )
-{
-
-}
-
 DirectedGraph *NFA::get_epsilon_transtions()
 {
     return epsilon_transtions;

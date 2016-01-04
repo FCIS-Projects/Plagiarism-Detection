@@ -25,8 +25,6 @@ public:
     //function to recognize the string belongs to the regular expression or invalid
     bool recognizes(QString str);
 
-    void search( QString *str, int index );
-    void search( QFile file );
     QList<int> * build_reachable_states(int root);
     QList<int> * build_reachable_states(QList<int>* root);
     digraph::DirectedGraph* get_epsilon_transtions();
