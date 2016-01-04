@@ -10,10 +10,10 @@ class DFA_Search
 {
 private:
     dfa_digraph::DirectedGraph_DFA *digraph;
-    QString *regex;
     QList<dfa_digraph::Node>* dfa;
+    QList<int> *reachables;
 public:
-    DFA_Search(dfa_digraph::DirectedGraph_DFA *digraph, QString *regex );
+    DFA_Search(dfa_digraph::DirectedGraph_DFA *digraph );
     bool search(QString str);
 };
 
