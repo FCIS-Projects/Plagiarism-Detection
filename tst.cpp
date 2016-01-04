@@ -6,35 +6,35 @@ TST::TST()
 {
 }
 
-int TST::get(QString key)
-{
-    Node *node = get(root, key, 0);
+//int TST::get(QString key)
+//{
+//    Node *node = get(root, key, 0);
 
-    if( node == NULL )
-        return (int)NULL;
+//    if( node == NULL )
+//        return (int)NULL;
 
-    return node->value;
-}
+//    return node->value;
+//}
 
-Node* TST::get(Node* node, QString key, int char_index)
-{
-    if( node == NULL )
-        return NULL;
+//Node* TST::get(Node* node, QString key, int char_index)
+//{
+//    if( node == NULL )
+//        return NULL;
 
-    QChar character = key.at(char_index);
+//    QChar character = key.at(char_index);
 
-    if( character < node->character )
-        return get(node->left, key, char_index);
+//    if( character < node->character )
+//        return get(node->left, key, char_index);
 
-    else if( character > node->character )
-        return get(node->right, key, char_index);
+//    else if( character > node->character )
+//        return get(node->right, key, char_index);
 
-    else if(character < key.length() - 1)
-        return get(node->middle, key, char_index + 1);
+//    else if(character < key.length() - 1)
+//        return get(node->middle, key, char_index + 1);
 
-    else
-        return node;
-}
+//    else
+//        return node;
+//}
 
 void TST::insert(QString key, int value)
 {
